@@ -14,16 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>graphics</name>
-			<type>2</type>
-			<location>/Users/perramount/Downloads/acm/graphics</location>
-		</link>
-		<link>
-			<name>program</name>
-			<type>2</type>
-			<location>/Users/perramount/Downloads/acm/program</location>
-		</link>
-	</linkedResources>
 </projectDescription>
