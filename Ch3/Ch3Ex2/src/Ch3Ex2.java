@@ -14,7 +14,10 @@ public class Ch3Ex2 extends ConsoleProgram {
 		println("and then display the new balance after a year.");
 		double balance = readDouble("Enter starting balance: ");
 		double rate = readDouble("Enter annual interest rate: ");
-		balance = balance * (1 + (rate / 100));
+		double comp_rate = (1 + (rate / 100));
+		balance = balance * comp_rate;
 		println("Balance after one year = " + balance);
+		balance = balance * comp_rate;
+		println("Balance after two years = " + balance);
 	}
 }
