@@ -7,6 +7,10 @@
 import acm.program.*;
 
 public class Ch4Ex9 extends ConsoleProgram {
+	
+	/* Variable to indicate max Fibonacci number */
+	private static final int MAX = 10000;
+	
 	public void run() {
 		println("This program displays the first 16 Fibonacci numbers.");
 		println("");
@@ -14,9 +18,10 @@ public class Ch4Ex9 extends ConsoleProgram {
 		println("1");
 		int recent = 1;
 		int second_recent = 0;
-		for (int i = 2; i <= 15; i++) {
-			int current = recent + second_recent;
-			println(current);
+		int current = 0;
+		while (current < MAX) {
+			current = recent + second_recent;
+			if (current < MAX) println(current);
 			second_recent = recent;
 			recent = current;
 			
