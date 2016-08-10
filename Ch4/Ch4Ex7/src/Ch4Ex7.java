@@ -9,13 +9,19 @@ import acm.program.*;
 
 public class Ch4Ex7 extends ConsoleProgram {
 	public void run() {
-		println("This program reverses the digits in an integer.");
+		println("This program calculates the digital root of an integer.");
 		int n = readInt("Enter a positive integer: ");
-		String reverse = "";
-		while (n > 0) {
-			reverse += (n % 10);
-			n /= 10;
+		int root = n;
+		while (root / 10 > 0) {
+			n = root;
+			root = 0;
+			while (n > 0) {
+				root += (n % 10);
+				n /= 10;
+			}
+			
 		}
-		println("The reverse of the digits is " + reverse);
+		
+		println("The digital root of the number is " + root);
 	}
 }
