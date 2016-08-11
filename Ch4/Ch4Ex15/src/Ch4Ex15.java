@@ -16,11 +16,18 @@ public class Ch4Ex15 extends GraphicsProgram {
 		double dx = (getWidth() - CIRCLE_SIZE) / N_STEPS;
 		double dy = (getHeight() - CIRCLE_SIZE) / N_STEPS;
 		for (int i = 0; i < N_STEPS; i++) {
-			circle.move(dx, dy);
+			if ((circle.getX() < CIRCLE_SIZE) || (circle.getX() > (getWidth() - CIRCLE_SIZE))) {
+				circle.move(-(2 * dx), dy);
+			} else if ((circle.getY() < CIRCLE_SIZE) || (circle.getY() > (getHeight() - CIRCLE_SIZE))) {
+				circle.move(dx, -(2 * dy));
+			} else {
+				circle.move(dx, dy);
+			}
 			pause(PAUSE_TIME);
 		}
 		
 	}
+
 	
 	/* Private constants */
 	private static final int N_STEPS = 1000;
