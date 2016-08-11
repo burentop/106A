@@ -20,11 +20,15 @@ public class Ch4Ex9 extends ConsoleProgram {
 		int second_recent = 0;
 		int current = 0;
 		while (current < MAX) {
-			current = recent + second_recent;
+			current = fibonacci(recent, second_recent);
 			if (current < MAX) println(current);
 			second_recent = recent;
 			recent = current;
 			
 		}
+	}
+	
+	private int fibonacci(int a, int b) {
+		return a + b;
 	}
 }
