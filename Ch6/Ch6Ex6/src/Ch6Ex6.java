@@ -51,7 +51,7 @@ public class Ch6Ex6 extends ConsoleProgram {
 		int user_answer = user;
 		while (wrong > 0) {
 			if (user_answer == answer) {
-				println("That's the answer!");
+				congratulate();
 				wrong = -1;
 			} else {
 				user_answer = readInt("That's incorrect - try a different answer: ");
@@ -59,6 +59,21 @@ public class Ch6Ex6 extends ConsoleProgram {
 			}
 		}
 		if (wrong == 0) println("No, the answer is " + answer);
+	}
+	
+	private void congratulate() {
+		int message = rgen.nextInt(3);
+		switch(message) {
+		case 0:
+			println("Correct!");
+			break;
+		case 1:
+			println("You got it!");
+			break;
+		default:
+			println("That's the answer!");
+			break;
+		}
 	}
 	
 	/* Random number generator */
