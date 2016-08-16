@@ -7,6 +7,7 @@
  */
 
 import acm.program.*;
+import java.math.*;
 
 public class Rational {
 
@@ -19,30 +20,30 @@ public class Rational {
 	}
 	
 	public Rational(int x, int y) {
-		int g = gcd(Math.abs(x), Math.abs(y));
-		num = x / g;
-		den = Math.abs(y) / g;
-		if (y < 0) num = -num;
+		BigInteger g = BigInteger.valueOf(gcd(Math.abs(x), Math.abs(y)));
+		num = BigInteger.valueOf(x).divide(g);
+		den = BigInteger.valueOf(Math.abs(y)).divide(g);
+		if (y < 0) num = num.negate();
 	}
 	
 	public Rational add(Rational r) {
-		return new Rational(this.num * r.den + r.num * this.den, this.den * r.den);
+		return new Rational(this.num.intValue() * r.den.intValue() + r.num.intValue() * this.den.intValue(), this.den.intValue() * r.den.intValue());
 	}
 	
 	public Rational subtract(Rational r) {
-		return new Rational(this.num * r.den - r.num * this.den, this.den * r.den);
+		return new Rational(this.num.intValue() * r.den.intValue() - r.num.intValue() * this.den.intValue(), this.den.intValue() * r.den.intValue());
 	}
 	
 	public Rational multiply(Rational r) {
-		return new Rational(this.num * r.num, this.den * r.den);
+		return new Rational(this.num.intValue() * r.num.intValue(), this.den.intValue() * r.den.intValue());
 	}
 	
 	public Rational divide(Rational r) {
-		return new Rational(this.num * r.den, this.den * r.num);
+		return new Rational(this.num.intValue() * r.den.intValue(), this.den.intValue() * r.num.intValue());
 	}
 	
 	public String toString() {
-		if (den == 1) {
+		if (den.intValue() == 1) {
 			return "" + num;
 		} else {
 			return num + "/" + den;
@@ -59,6 +60,6 @@ public class Rational {
 		return y;
 	}
 	
-	private int num;
-	private int den;
+	private BigInteger num;
+	private BigInteger den;
 }
