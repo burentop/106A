@@ -8,12 +8,37 @@
  */
 
 import acm.program.*;
+import java.util.ArrayList;
 import acm.util.*;
 
 public class Ch6Ex5 extends ConsoleProgram {
 	public void run() {
+		
+		ArrayList<WheelCombo> wheelCombos = new ArrayList<>();
+		
+		wheelCombos.add(new WheelCombo(5, 5, 5, 250));
+		wheelCombos.add(new WheelCombo(4, 4, 4, 20));
+		wheelCombos.add(new WheelCombo(4, 4, 5, 20));
+		wheelCombos.add(new WheelCombo(3, 3, 3, 14));
+		wheelCombos.add(new WheelCombo(3, 3, 5, 14));
+		wheelCombos.add(new WheelCombo(2, 2, 2, 10));
+		wheelCombos.add(new WheelCombo(2, 2, 5, 10));
+		wheelCombos.add(new WheelCombo(0, 0, 0, 7));
+		
+		for (int i = 0; i < 6; i++) {
+			wheelCombos.add(new WheelCombo(0, 0, i, 5));
+		}
+		
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 6; j++) {
+				wheelCombos.add(new WheelCombo(0, i, j, 2));
+			}
+		}
+		
 		int pot = 50;
+		
 		while(pot > 0) {
+			int potIncrease = 0;
 			print("You have $" + pot + ". ");
 			String input = readLine("Would you like to play? ");
 			if (input.equals("no")) break;
@@ -25,47 +50,24 @@ public class Ch6Ex5 extends ConsoleProgram {
 			int wheel2 = rgen.nextInt(6);
 			int wheel3 = rgen.nextInt(6);
 			
+			for (int i = 0; i < wheelCombos.size(); i++) {
+				if (wheelCombos.get(i).isMatch(wheel1, wheel2, wheel3)) {
+					potIncrease = wheelCombos.get(i).getPayout();
+					break;
+				}
+				
+			}
+			pot += potIncrease;
+			
 			String wheel1_result = checkWheel(wheel1);
 			String wheel2_result = checkWheel(wheel2);
 			String wheel3_result = checkWheel(wheel3);
 			
-			if (wheel1_result.equals("BAR")) {
-				if (wheel2_result.equals("BAR")) {
-					if (wheel3_result.equals("BAR")) {
-						pot += 250;
-					}
-				}
-			} else if (wheel1_result.equals("BELL")) {
-				if (wheel2_result.equals("BELL")) {
-					if ((wheel3_result.equals("BELL")) || (wheel3_result.equals("BAR"))) {
-						pot += 20;
-					}
-				}
-			} else if (wheel1_result.equals("PLUM")) {
-				if (wheel2_result.equals("PLUM")) {
-					if ((wheel3_result.equals("PLUM")) || (wheel3_result.equals("BAR"))) {
-						pot += 14;
-					}
-				}
-			} else if (wheel1_result.equals("ORANGE")) {
-				if (wheel2_result.equals("ORANGE")) {
-					if ((wheel3_result.equals("ORANGE")) || (wheel3_result.equals("BAR"))) {
-						pot += 10;
-					}
-				}
-			} else if (wheel1_result.equals("CHERRY")) {
-				if (wheel2_result.equals("CHERRY")) {
-					if (wheel3_result.equals("CHERRY")) {
-						pot += 7;
-					} else {
-						pot += 5;
-					}
-				} else {
-					pot += 2;
-				}
-			}
+			println(wheel1_result + "  " + wheel2_result + "  " + wheel3_result + " -- " +"You have $" + pot + ".");
 		}
-		println("You have $" + pot + ".");
+		
+		println("You have $" + pot);
+		
 	}
 	
 	/**
@@ -84,7 +86,7 @@ public class Ch6Ex5 extends ConsoleProgram {
 		case 3:
 			return "PLUM";
 		case 4:
-			return "BALL";
+			return "BELL";
 		default:
 			return "BAR";
 		}
