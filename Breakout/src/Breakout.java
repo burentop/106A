@@ -55,8 +55,8 @@ public class Breakout extends GraphicsProgram {
 	private static final int NTURNS = 3;
 	
 	public void run() {
-			gameSetup();
-			// gamePlay();
+		gameSetup();
+		// gamePlay();
 		}
 	
 	private void gameSetup() {
@@ -65,6 +65,7 @@ public class Breakout extends GraphicsProgram {
 				addBrick(i, j);
 			}
 		}
+		addPaddle();
 	}
 	
 	private void addBrick(int row, int column) {
@@ -77,5 +78,22 @@ public class Breakout extends GraphicsProgram {
 		else if (row < 8) brick.setFillColor(Color.GREEN);
 		else brick.setFillColor(Color.CYAN);
 	}
+	
+	public void addPaddle() {
+		paddle = new GRect(PADDLE_WIDTH, PADDLE_HEIGHT);
+		paddle.setFilled(true);
+		paddle.setFillColor(Color.BLACK);
+		add(paddle, getWidth() / 2, getHeight() - PADDLE_Y_OFFSET);
+		addMouseListeners();
+	}
+	
+	public void mouseMoved(MouseEvent e) {
+		if (e.getX() < getWidth() - PADDLE_WIDTH) {
+			paddle.setLocation(e.getX(), getHeight() - PADDLE_Y_OFFSET);
+		}
+		
+	}
+	
+	private GRect paddle;
 	
 }
