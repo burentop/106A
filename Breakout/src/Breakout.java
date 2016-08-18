@@ -56,7 +56,7 @@ public class Breakout extends GraphicsProgram {
 	
 	public void run() {
 		gameSetup();
-		// gamePlay();
+		gamePlay();
 		}
 	
 	private void gameSetup() {
@@ -66,6 +66,11 @@ public class Breakout extends GraphicsProgram {
 			}
 		}
 		addPaddle();
+	}
+	
+	private void gamePlay() {
+		addBall();
+		moveBall();
 	}
 	
 	private void addBrick(int row, int column) {
@@ -94,6 +99,55 @@ public class Breakout extends GraphicsProgram {
 		
 	}
 	
+	private void addBall() {
+		ball = new GOval(2 * BALL_RADIUS, 2 * BALL_RADIUS);
+		ball.setFilled(true);
+		ball.setFillColor(Color.BLACK);
+		add(ball, (getWidth() / 2) - BALL_RADIUS, (getHeight() / 2) - BALL_RADIUS);
+	}
+	
+	private void moveBall() {
+		vy = 3.0;
+		vx = rgen.nextDouble(1.0, 3.0);
+		if (rgen.nextBoolean(0.5)) vx = -vx;
+		while (true) {
+			ball.move(vx, vy);
+			ball.pause(15);
+			if ((ball.getX() < 0) || (ball.getX() + (2 * BALL_RADIUS) > getWidth())) {
+				vx = -vx;
+			} else if ((ball.getY() < 0) || (ball.getY() + (2 * BALL_RADIUS) > getHeight())) {
+				vy = -vy;
+			}
+			GObject collider = getCollidingObject();
+			if (collider == paddle) {
+				vy = -vy;
+			} else if (collider != null){
+				vy = -vy;
+				remove(collider);
+			}
+			
+		}
+	}
+	
+	private GObject getCollidingObject() {
+		double x = ball.getX();
+		double xRight = ball.getX() + 2 * BALL_RADIUS;
+		double y = ball.getY();
+		double yRight = ball.getY() + 2 * BALL_RADIUS;
+		if (getElementAt(x, y) != null) {
+			return getElementAt(x, y);
+		} else if (getElementAt(xRight, y) != null) {
+			return getElementAt(xRight, y);
+		} else if (getElementAt(x, yRight) != null) {
+			return getElementAt(x, yRight);
+		} else {
+			return getElementAt(xRight, yRight);
+		}
+	}
+	
 	private GRect paddle;
+	private GOval ball;
+	private double vx, vy;
+	private RandomGenerator rgen = RandomGenerator.getInstance();
 	
 }
