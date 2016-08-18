@@ -66,6 +66,7 @@ public class Breakout extends GraphicsProgram {
 			}
 		}
 		addPaddle();
+		lives = NTURNS;
 	}
 	
 	private void gamePlay() {
@@ -96,8 +97,8 @@ public class Breakout extends GraphicsProgram {
 		if (e.getX() < getWidth() - PADDLE_WIDTH) {
 			paddle.setLocation(e.getX(), getHeight() - PADDLE_Y_OFFSET);
 		}
-		
 	}
+	
 	
 	private void addBall() {
 		ball = new GOval(2 * BALL_RADIUS, 2 * BALL_RADIUS);
@@ -108,14 +109,16 @@ public class Breakout extends GraphicsProgram {
 	
 	private void moveBall() {
 		int numBalls = NBRICKS_PER_ROW * NBRICK_ROWS;
+		int consecutiveHits = 0;
 		vy = 3.0;
 		vx = rgen.nextDouble(1.0, 3.0);
 		if (rgen.nextBoolean(0.5)) vx = -vx;
-		while (true) {
+		while (lives > 0) {
 			if (numBalls < 1) {
 				winner();
 				break;
 			}
+			//if (consecutiveHits > 3) vy = 6.0;
 			ball.move(vx, vy);
 			ball.pause(15);
 			if ((ball.getX() < 0) || (ball.getX() + (2 * BALL_RADIUS) > getWidth())) {
@@ -123,34 +126,35 @@ public class Breakout extends GraphicsProgram {
 			} else if (ball.getY() < 0) {
 				vy = -vy;
 			} else if (ball.getY() > getHeight()) {
-				vy = -vy;
-				//break;
+				lives--;
+				gamePlay();
 			}
 			GObject collider = getCollidingObject();
 			if (collider == paddle) {
 				vy = -vy;
+				consecutiveHits++;
 			} else if (collider != null){
 				vy = -vy;
 				remove(collider);
 				numBalls--;
 			}
-			
 		}
+		loser();
 	}
 	
 	private GObject getCollidingObject() {
 		double x = ball.getX();
 		double xRight = ball.getX() + 2 * BALL_RADIUS;
 		double y = ball.getY();
-		double yRight = ball.getY() + 2 * BALL_RADIUS;
-		if (getElementAt(x, y) != null) {
+		double yBottom = ball.getY() + 2 * BALL_RADIUS;
+		if (getElementAt(x, yBottom) != null) {
+			return getElementAt(x, yBottom);
+		} else if (getElementAt(xRight, yBottom) != null) {
+			return getElementAt(xRight, yBottom);
+		} else if (getElementAt(x, y) != null) {
 			return getElementAt(x, y);
-		} else if (getElementAt(xRight, y) != null) {
-			return getElementAt(xRight, y);
-		} else if (getElementAt(x, yRight) != null) {
-			return getElementAt(x, yRight);
 		} else {
-			return getElementAt(xRight, yRight);
+			return getElementAt(xRight, y);
 		}
 	}
 	
@@ -161,8 +165,16 @@ public class Breakout extends GraphicsProgram {
 		add(winningMessage, (getWidth() - winningMessage.getWidth()) / 2, getHeight() / 2);
 	}
 	
+	private void loser() {
+		GLabel losingMessage = new GLabel("YOU LOSE!!");
+		losingMessage.setColor(Color.RED);
+		losingMessage.setFont("Font.SERIF-bold-24");
+		add(losingMessage, (getWidth() - losingMessage.getWidth()) / 2, getHeight() / 2);
+	}
+	
 	private GRect paddle;
 	private GOval ball;
+	private int lives;
 	private double vx, vy;
 	private RandomGenerator rgen = RandomGenerator.getInstance();
 	
