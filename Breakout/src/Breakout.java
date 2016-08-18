@@ -107,16 +107,24 @@ public class Breakout extends GraphicsProgram {
 	}
 	
 	private void moveBall() {
+		int numBalls = NBRICKS_PER_ROW * NBRICK_ROWS;
 		vy = 3.0;
 		vx = rgen.nextDouble(1.0, 3.0);
 		if (rgen.nextBoolean(0.5)) vx = -vx;
 		while (true) {
+			if (numBalls < 1) {
+				winner();
+				break;
+			}
 			ball.move(vx, vy);
 			ball.pause(15);
 			if ((ball.getX() < 0) || (ball.getX() + (2 * BALL_RADIUS) > getWidth())) {
 				vx = -vx;
-			} else if ((ball.getY() < 0) || (ball.getY() + (2 * BALL_RADIUS) > getHeight())) {
+			} else if (ball.getY() < 0) {
 				vy = -vy;
+			} else if (ball.getY() > getHeight()) {
+				vy = -vy;
+				//break;
 			}
 			GObject collider = getCollidingObject();
 			if (collider == paddle) {
@@ -124,6 +132,7 @@ public class Breakout extends GraphicsProgram {
 			} else if (collider != null){
 				vy = -vy;
 				remove(collider);
+				numBalls--;
 			}
 			
 		}
@@ -143,6 +152,13 @@ public class Breakout extends GraphicsProgram {
 		} else {
 			return getElementAt(xRight, yRight);
 		}
+	}
+	
+	private void winner() {
+		GLabel winningMessage = new GLabel("YOU WON!!");
+		winningMessage.setColor(Color.BLUE);
+		winningMessage.setFont("Font.SERIF-bold-24");
+		add(winningMessage, (getWidth() - winningMessage.getWidth()) / 2, getHeight() / 2);
 	}
 	
 	private GRect paddle;
