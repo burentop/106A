@@ -10,7 +10,7 @@ import acm.program.*;
 public class Ch4Ex6 extends ConsoleProgram {
 	
 	/* Value of the 'sentinel' */
-	private static final int SENTINEL = -1;
+	private static final String SENTINEL = "";
 	
 	public void run() {
 		println("This program averages a list of integers.");
@@ -19,9 +19,9 @@ public class Ch4Ex6 extends ConsoleProgram {
 		double total = 0;
 		int count = 0;
 		while (true) {
-			int value = readInt(" ? ");
-			if (value == SENTINEL) break;
-			total += value;
+			String input = readLine(" ? ");
+			if (input.equals(SENTINEL)) break;
+			total += Integer.parseInt(input);
 			count++;
 		}
 		println("The average is " + (total / (double) count) + ".");
