@@ -13,7 +13,7 @@ import acm.util.*;
 public class Ch6Ex6 extends ConsoleProgram {
 
 	public void run() {
-		println("Welcome to Math Quiz");
+		println("Welcome to the Octal Math Quiz");
 		for (int i = 0; i < TOTAL_QUESTIONS; i++) {
 			int x = createX();
 			boolean operator = createOp();
@@ -22,8 +22,23 @@ public class Ch6Ex6 extends ConsoleProgram {
 			int answer = 0;
 			if (operator) answer = x + y;
 			else answer = x - y;
-			checkAnswer(user_answer, answer);
+			int octalAnswer = makeOctal(answer);
+			checkAnswer(user_answer, octalAnswer);
 		}
+	}
+	
+	private int makeOctal(int dec) {
+		int div = dec;
+		int mod = 0;
+		int oct = 0;
+		int pow = 1;
+		while (div > 0) {
+			mod = div % 8;
+			oct += mod * pow;
+			pow *= 10;
+			div = div / 8;
+		}
+		return oct;
 	}
 	
 	private int createX() {
