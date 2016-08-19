@@ -10,9 +10,17 @@ import acm.program.*;
 
 public class Ch6Ex10 extends ConsoleProgram {
 	public void run() {
-		Rational num1 = new Rational(1, 3);
-		Rational num2 = new Rational(1, 2);
+		println("Allocating 10000 Rational objects");
 		
-		println("1/2 + 1/3 = " + num1.add(num2));
+		for (int i = 1; i <= 10000; i++) {
+			println(new Rational(1, i));
+		}
+		
+		Runtime myRuntime = Runtime.getRuntime();
+		long before = myRuntime.freeMemory();
+		myRuntime.gc();
+		long after = myRuntime.freeMemory();
+		
+		println("Garbage collection freed " + (after - before) + " bytes");
 	}
 }
