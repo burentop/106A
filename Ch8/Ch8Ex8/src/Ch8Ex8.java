@@ -14,6 +14,12 @@ public class Ch8Ex8 extends ConsoleProgram {
 		println("The plural of 'beach' is: " + createRegularPlural("beach"));
 		println("The plural of 'cherry' is: " + createRegularPlural("cherry"));
 		println("The plural of 'noun' is: " + createRegularPlural("noun"));
+		println();
+		println("The present participle of 'think' is: " + createPresentParticiple("think"));
+		println("The present participle of 'cogitate' is: " + createPresentParticiple("cogitate"));
+		println("The present participle of 'program' is: " + createPresentParticiple("program"));
+		println("The present participle of 'move' is: " + createPresentParticiple("move"));
+		println("The present participle of 'see' is: " + createPresentParticiple("see"));
 	}
 	
 	private String createRegularPlural(String word) {
@@ -34,6 +40,27 @@ public class Ch8Ex8 extends ConsoleProgram {
 			}
 		default:
 			return word + "s";
+		}
+	}
+	
+	private String createPresentParticiple(String word) {
+		switch(word.charAt(word.length() - 1)) {
+		case 'e':
+			if (!isVowel(word.charAt(word.length() - 2))) {
+				return word.substring(0, word.length() - 1) + "ing";
+			} else {
+				return word + "ing";
+			}
+		default:
+			if (!isVowel(word.charAt(word.length() - 1))) {
+				if (isVowel(word.charAt(word.length() - 2))) {
+					return word + word.charAt(word.length() - 1) + "ing";
+				} else {
+					return word + "ing";
+				}
+			} else {
+				return word + "ing";
+			}
 		}
 	}
 	
