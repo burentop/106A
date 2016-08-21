@@ -36,16 +36,20 @@ public class Ch8Ex17 extends ConsoleProgram {
 	}
 	
 	private String translateWord(String word) {
+		String result = "";
+		boolean isCapital = Character.isUpperCase(word.charAt(0));
 		int vp = findFirstVowel(word);
 		if(vp == -1) {
-			return word;
+			result = word;
 		} else if (vp == 0) {
-			return word + "way";
+			result = word + "way";
 		} else {
 			String head = word.substring(0, vp);
 			String tail = word.substring(vp);
-			return tail + head + "ay";
+			result = tail + head + "ay";
 		}
+		if (isCapital) return result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
+		else return result.toLowerCase();
 	}
 	
 	private int findFirstVowel(String word) {
