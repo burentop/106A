@@ -14,6 +14,16 @@ public class Ch8Ex20 extends ConsoleProgram {
 		String shortStr = "TTGCC";
 		String longStr = "TCTACGGTACGTC";
 		println(findFirstMatchingPosition(shortStr, longStr));
+		
+		String testString = "test this phrase ";
+		StringTokenizer testToken = new StringTokenizer(testString);
+		println(testToken.nextToken());
+		println(testToken.hasMoreTokens());
+		println(testToken.nextToken());
+		println(testToken.hasMoreTokens());
+		println(testToken.nextToken());
+		println(testToken.hasMoreTokens());
+		println(testToken.nextToken());
 	}
 	
 	private int findFirstMatchingPosition(String shortDNA, String longDNA) {
