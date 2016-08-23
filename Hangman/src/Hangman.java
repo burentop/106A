@@ -18,13 +18,13 @@ public class Hangman extends ConsoleProgram {
 	
 	public void run() {
 		HangmanLexicon game = new HangmanLexicon();
-		
+		canvas.reset(toDisplay);
 		println("Welcome to Hangman!");
 		int pick = rgen.nextInt(game.getWordCount());
 		toGuess = game.getWord(pick);
 		toDisplay = "";
 		for (int i = 0; i < toGuess.length(); i++) {
-			toDisplay += "_";
+			toDisplay += "-";
 		}
 		guesses = GUESSES;
 		while (true) {
@@ -35,6 +35,7 @@ public class Hangman extends ConsoleProgram {
 				break;
 			}
 			println("The word now looks like this: " + toDisplay);
+			canvas.displayWord(toDisplay);
 			println("You have " + guesses + " guesses left.");
 			String guess = readLine("Your guess: ");
 			String upperGuess = guess.toUpperCase();
@@ -46,6 +47,7 @@ public class Hangman extends ConsoleProgram {
 			}
 			if (toDisplay.equals(toGuess)) {
 				println("You guessed the word: " + toGuess);
+				canvas.displayWord(toDisplay);
 				break;
 			}
 		}
@@ -68,6 +70,7 @@ public class Hangman extends ConsoleProgram {
 		} else {
 			println("There are no " + guess + "'s in the word.");
 			guesses--;
+			canvas.noteIncorrectGuess(guess, guesses);
 		}
 		
 	}
