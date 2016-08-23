@@ -10,6 +10,12 @@ import acm.program.*;
 import acm.util.RandomGenerator;
 
 public class Hangman extends ConsoleProgram {
+	
+	public void init() {
+		canvas = new HangmanCanvas();
+		add(canvas);
+	}
+	
 	public void run() {
 		HangmanLexicon game = new HangmanLexicon();
 		
@@ -32,7 +38,6 @@ public class Hangman extends ConsoleProgram {
 			println("You have " + guesses + " guesses left.");
 			String guess = readLine("Your guess: ");
 			String upperGuess = guess.toUpperCase();
-			guesses--;
 			if ((guess.length() == 1) && (upperGuess.charAt(0) >= 'A') && (upperGuess.charAt(0) <= 'Z')) {
 				char charGuess = upperGuess.charAt(0);
 				checkGuess(charGuess);
@@ -62,6 +67,7 @@ public class Hangman extends ConsoleProgram {
 			println("That guess is correct.");
 		} else {
 			println("There are no " + guess + "'s in the word.");
+			guesses--;
 		}
 		
 	}
@@ -71,4 +77,5 @@ public class Hangman extends ConsoleProgram {
 	private String toGuess;
 	private String toDisplay;
 	private int guesses;
+	private HangmanCanvas canvas;
 }
