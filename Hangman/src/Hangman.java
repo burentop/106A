@@ -6,6 +6,8 @@
  *
  */
 
+import java.io.IOException;
+
 import acm.program.*;
 import acm.util.RandomGenerator;
 
@@ -17,7 +19,13 @@ public class Hangman extends ConsoleProgram {
 	}
 	
 	public void run() {
-		HangmanLexicon game = new HangmanLexicon();
+		HangmanLexicon game = null;
+		try {
+			game = new HangmanLexicon();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		canvas.reset(toDisplay);
 		println("Welcome to Hangman!");
 		int pick = rgen.nextInt(game.getWordCount());
