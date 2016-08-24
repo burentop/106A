@@ -17,8 +17,8 @@ public class Ch11Ex1 extends ConsoleProgram {
 		for(int i = 0; i < scoreArray.length; i++) {
 			scoreArray[i] = readDouble("? ");
 		}
-		double low = removeLow(scoreArray);
-		double high = removeHigh(scoreArray);
+		scoreArray = removeLow(scoreArray, calculateLow(scoreArray));
+		double high = calculateHigh(scoreArray);
 		println("The average score is: " + mean(scoreArray));
 		println("The standard deviation is: " + stdev(scoreArray));
 	}
@@ -49,7 +49,7 @@ public class Ch11Ex1 extends ConsoleProgram {
 		return total;
 	}
 	
-	private double removeLow(double[] array) {
+	private double calculateLow(double[] array) {
 		double low = 11.0;
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] < low) low = array[i];
@@ -57,12 +57,26 @@ public class Ch11Ex1 extends ConsoleProgram {
 		return low;
 	}
 	
-	private double removeHigh(double[] array) {
+	private double calculateHigh(double[] array) {
 		double high = -1.0;
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] > high) high = array[i];
 		}
 		return high;
+	}
+	
+	private double[] removeLow(double[] array, double low) {
+		double[] lowRemoved = new double[array.length - 1];
+		double tempLow = low;
+		int tempIndex = 0;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == tempLow) {
+				tempLow = -1;
+			} else {
+				lowRemoved[tempIndex++] = array[i];
+			}
+		}
+		return lowRemoved;
 	}
 	
 	private double[] scoreArray;
