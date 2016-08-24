@@ -19,16 +19,34 @@ public class Ch11Ex1 extends ConsoleProgram {
 		}
 		double low = removeLow(scoreArray);
 		double high = removeHigh(scoreArray);
-		println("The average score is: " + computeAvg(scoreArray, low, high));
+		println("The average score is: " + mean(scoreArray));
+		println("The standard deviation is: " + stdev(scoreArray));
 	}
 	
-	private double computeAvg(double[] array, double low, double high) {
+	private double mean(double[] array) {
+		double total = 0;
+		for (int i = 0; i < array.length; i++) {
+			total += array[i];
+		}
+		return total / array.length;
+	}
+	
+	private double stdev(double[] array) {
+		double distrMean = mean(array);
+		double total = 0;
+		for (int i = 0; i < array.length; i++) {
+			total += (distrMean - array[i]) * (distrMean - array[i]);
+		}
+		return Math.sqrt(total / array.length);
+	}
+	
+	private double computeTotal(double[] array, double low, double high) {
 		double total = 0;
 		for (int i = 0; i < array.length; i++) {
 			total += array[i];
 		}
 		total = total - low - high;
-		return total / (array.length - 2);
+		return total;
 	}
 	
 	private double removeLow(double[] array) {
