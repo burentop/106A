@@ -112,15 +112,17 @@ public class Breakout extends GraphicsProgram {
 		int consecutiveHits = 0;
 		vy = 3.0;
 		vx = rgen.nextDouble(1.0, 3.0);
+		int pause = 15;
 		if (rgen.nextBoolean(0.5)) vx = -vx;
 		while (lives > 0) {
 			if (numBalls < 1) {
 				winner();
 				break;
 			}
-			//if (consecutiveHits > 3) vy = 6.0;
+			
+			if (consecutiveHits > 3) pause = 10;
 			ball.move(vx, vy);
-			ball.pause(15);
+			ball.pause(pause);
 			if ((ball.getX() < 0) || (ball.getX() + (2 * BALL_RADIUS) > getWidth())) {
 				vx = -vx;
 			} else if (ball.getY() < 0) {

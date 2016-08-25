@@ -8,22 +8,30 @@
  *
  */
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import acm.program.*;
 
 public class Ch11Ex1 extends ConsoleProgram {
 	public void run() {
 		println("Please enter the scores from each of the 7 judges.");
-		scoreArray = new double[7];
+		scoreArray = new Double[7];
 		for(int i = 0; i < scoreArray.length; i++) {
-			scoreArray[i] = readDouble("? ");
+			scoreArray[i] = new Double(readDouble("? "));
 		}
-		scoreArray = removeLow(scoreArray, calculateLow(scoreArray));
-		double high = calculateHigh(scoreArray);
+		Arrays.sort(scoreArray);
+		List<Double> scoreList = new ArrayList<Double>(Arrays.asList(scoreArray));
+		scoreList.remove(0);
+		scoreList.remove(scoreList.size() - 1);
+		
 		println("The average score is: " + mean(scoreArray));
 		println("The standard deviation is: " + stdev(scoreArray));
 	}
 	
-	private double mean(double[] array) {
+	private double mean(Double[] array) {
 		double total = 0;
 		for (int i = 0; i < array.length; i++) {
 			total += array[i];
@@ -31,7 +39,7 @@ public class Ch11Ex1 extends ConsoleProgram {
 		return total / array.length;
 	}
 	
-	private double stdev(double[] array) {
+	private double stdev(Double[] array) {
 		double distrMean = mean(array);
 		double total = 0;
 		for (int i = 0; i < array.length; i++) {
@@ -40,44 +48,9 @@ public class Ch11Ex1 extends ConsoleProgram {
 		return Math.sqrt(total / array.length);
 	}
 	
-	private double computeTotal(double[] array, double low, double high) {
-		double total = 0;
-		for (int i = 0; i < array.length; i++) {
-			total += array[i];
-		}
-		total = total - low - high;
-		return total;
-	}
+
 	
-	private double calculateLow(double[] array) {
-		double low = 11.0;
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] < low) low = array[i];
-		}
-		return low;
-	}
 	
-	private double calculateHigh(double[] array) {
-		double high = -1.0;
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] > high) high = array[i];
-		}
-		return high;
-	}
 	
-	private double[] removeLow(double[] array, double low) {
-		double[] lowRemoved = new double[array.length - 1];
-		double tempLow = low;
-		int tempIndex = 0;
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] == tempLow) {
-				tempLow = -1;
-			} else {
-				lowRemoved[tempIndex++] = array[i];
-			}
-		}
-		return lowRemoved;
-	}
-	
-	private double[] scoreArray;
+	private Double[] scoreArray;
 }
