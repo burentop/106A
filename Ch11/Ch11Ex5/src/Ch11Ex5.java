@@ -35,7 +35,7 @@ public class Ch11Ex5 extends ConsoleProgram {
 		
 		println("This program checks the accuracy of a sudoku solution.");
 		println("Sudoku 1: " + checkSudokuSolution(sudoku1));
-		println("Sudoku 2: " + checkSudokuSolution(sudoku2));
+		println("Sudoku 2: " + checkSudokuSolution(sudoku2)); 
 		
 	}
 	
