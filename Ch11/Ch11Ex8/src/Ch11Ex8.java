@@ -9,11 +9,20 @@
 
 import acm.program.*;
 
-public class Ch11Ex8 extends ConsoleProgram {
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import acm.graphics.*;
+
+
+public class Ch11Ex8 extends GraphicsProgram {
 	public void run() {
-		println("The program translates a line into Morse code.");
-		String line = readLine("Enter English text: ");
-		displayMorse(line);
+		JLabel inputPrompt = new JLabel("Input string", JLabel.RIGHT);
+		JTextField userLine = new JTextField(20);
+		add(inputPrompt);
+		add(userLine);
+		
+		//String line = readLine("Enter English text: ");
+		//displayMorse(line);
 	}
 	
 	private void displayMorse(String line) {
