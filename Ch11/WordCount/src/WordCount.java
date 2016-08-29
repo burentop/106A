@@ -31,12 +31,12 @@ public class WordCount extends ConsoleProgram {
 				line = rd.readLine();
 				if (line == null) break;
 				lines += 1;
-				chars += 1;
+				chars += line.length();
+				words++;
 				for (int i = 1; i < line.length(); i++) {
 					char letter = line.charAt(i);
 					char prevLetter = line.charAt(i - 1);
-					if (Character.isLetterOrDigit(letter)) chars += 1;
-					if (!Character.isLetterOrDigit(letter) && Character.isLetterOrDigit(prevLetter)) {
+					if (Character.isLetterOrDigit(letter) && !Character.isLetterOrDigit(prevLetter)) {
 						words += 1;
 					}
 				}
