@@ -17,7 +17,7 @@ public class Ch13Ex1 extends ConsoleProgram {
 		states.put("TN", "Tennessee");
 		states.put("GA", "Georgia");
 		
-		println(states.get("GA"));
+		
 		
 	}
 }

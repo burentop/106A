@@ -11,8 +11,18 @@ public class SimpleStringMap {
 			keyArray = doubleArrayCapacity(keyArray);
 			valueArray = doubleArrayCapacity(valueArray);
 		}
-		keyArray[indexNumber] = key;
-		valueArray[indexNumber] = value;
+		int putIndex = findIndex(key);
+		if (putIndex != indexNumber) {
+			for (int i = keyArray.length - 1; i > putIndex; i--) {
+				keyArray[i] = keyArray[i - 1];
+				valueArray[i] = valueArray[i - 1];
+			}
+			keyArray[putIndex] = key;
+			valueArray[putIndex] = value;
+		} else {
+			keyArray[indexNumber] = key;
+			valueArray[indexNumber] = value;
+		}
 		indexNumber++;
 	}
 	
@@ -31,6 +41,21 @@ public class SimpleStringMap {
 			newArray[i] = oldArray[i];
 		}
 		return newArray;
+	}
+	
+	private int findIndex(String newKey) {
+		for (int i = keyArray.length - 1; i > 0; i--) {
+			if (newKey.compareTo(keyArray[i]) <= 0) {
+				if (i > 0) {
+					if (newKey.compareTo(keyArray[i - 1]) >= 0) {
+						return i;
+					}
+				} else {
+					return i;
+				}
+			}
+		}
+		return indexNumber;
 	}
 	
 	private int indexNumber = 0;
